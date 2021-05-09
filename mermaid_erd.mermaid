@@ -1,0 +1,36 @@
+erDiagram
+          cities ||--o{ place_to_rent: belongs_to
+          cities{
+          integer id_PK
+          string name
+          }
+          users ||--o{ place_to_rent: belongs_to_owner
+          place_to_rent{
+          integer id_PK
+          integer city_id_FK
+          integer owner_id-user_FK
+          integer vacant_beds
+          float price_by_night
+          text description
+          boolean wifi
+          integer reservation_id_FK
+          }
+          users{
+          integer id_PK
+          string first_name
+          string last_name
+          string email
+          text description
+          integer rental_id_FK
+          }
+          place_to_rent ||--o{ users: has_many_guests
+          place_to_rent ||--o{ reservations: belongs_to
+          reservations{
+          integer id_PK
+          datetime start_date
+          integer place_to_rent_id_FK
+          integer guest_id-user_FK
+          time duration
+          }
+          users ||--o{ reservations: belongs_to
+            
