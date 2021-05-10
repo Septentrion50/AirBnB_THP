@@ -18,9 +18,16 @@ class Listing < ApplicationRecord
   has_many :reservations
   belongs_to :city
 
-  def overlapping_reservation?(datetime)
-    reservations.each do |r|
-      if r.start_date.to_i <= datetime.to_i && datetime.to_i < r.end_date.to_i
+  before_validation :overlapping_reservation?
+
+  def overlapping_reservation?
+    last = self.reservations.last    
+    puts last
+    if last.nil?
+      false
+    end
+    self.reservations.each do |r|
+      if r.start_date.to_i <= last && last < r.end_date.to_i
         true
       else
         false
